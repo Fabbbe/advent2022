@@ -5,6 +5,8 @@ priority = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 if __name__ == '__main__':
     f = open('./input', 'r')
     lines = f.readlines()
+    f.close()
+
     lines = [line[:-1] for line in lines]
     sum_p1 = 0
     for line in lines:
@@ -25,4 +27,3 @@ if __name__ == '__main__':
 
     print("Part 1: " + str(sum_p1))
     print("Part 2: " + str(sum_p2))
-
