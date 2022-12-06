@@ -2,17 +2,17 @@
 
 if __name__ == '__main__':
     f = open('./input', 'r')
-    lines = f.readlines()
+    content = f.read()
     f.close()
 
     box_lines = []
     move_lines = []
 
-    for line in lines:
-        if line[0] == '[':
-            box_lines.append(line)
-        elif line[0] == 'm':
-            move_lines.append(line)
+    box_content, move_content = content.split('\n\n')
+    box_lines = box_content.split('\n')
+    move_lines = move_content.split('\n')
+    box_lines.pop() # Remove the index line
+    move_lines.remove('') # Remove any empty lines
 
     box_lines.reverse()
 

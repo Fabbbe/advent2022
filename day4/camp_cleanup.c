@@ -40,7 +40,7 @@ struct Range *read_data(const char *path, int *range_count) {
 	return ranges;
 }
 
-void main(void) {
+int main(void) {
 	int range_count;
 	struct Range *ranges = read_data("./input", &range_count);
 
@@ -69,4 +69,6 @@ void main(void) {
 	printf("Part 2: %d\n", sum_p2);
 
 	free(ranges);
+	
+	return 0;
 }

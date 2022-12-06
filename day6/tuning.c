@@ -6,7 +6,7 @@
 int find_sop(char* message, int length);
 char* read_input(const char* path, long *length);
 
-void main(void) {
+int main(void) {
 	long length;
 	char *input = read_input("./input", &length);
 
@@ -17,6 +17,8 @@ void main(void) {
 	printf("%d\n", start_of_message);
 
 	free(input);
+	
+	return 0;
 }
 
 /* This might be made faster if i write seperate functions for strchr and

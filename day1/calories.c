@@ -4,17 +4,16 @@
 
 #define MAX(x, y) x > y ? x : y;
 
-void main(void) {
+int main(void) {
 
 	FILE *fp = fopen("./input", "r");
 	if (fp == NULL) {
 		printf("Could not open file!\n");
-		return;
+		return -1;
 	}
 
 	size_t line_len = 128;
 	char line[line_len];
-	ssize_t read;
 
 	int largest_sum_p1 = 0;
 	int sum_p1 = 0;
@@ -62,4 +61,6 @@ void main(void) {
 
 	printf("%d\n", largest_sum_p1);
 	printf("%d\n", total_sum_p2);
+
+	return 0;
 }
