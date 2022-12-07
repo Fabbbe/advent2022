@@ -16,14 +16,14 @@ if __name__ == '__main__':
 
     box_lines.reverse()
 
-    boxes_p1 = [[],[],[],[],[],[],[],[],[]]
+    boxes_p1 = [[],[],[],[],[],[],[],[],[]] 
     boxes_p2 = [[],[],[],[],[],[],[],[],[]]
 
     for i in range(len(box_lines)):
         for j in range(9):
             index = j*4+1
             if box_lines[i][index] != ' ':
-                boxes_p1[j].append(box_lines[i][index])
+                boxes_p1[j].append(box_lines[i][index]) # Create two instead of deep copy later
                 boxes_p2[j].append(box_lines[i][index])
 
     # Crane moves one box at a time
