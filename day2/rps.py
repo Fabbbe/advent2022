@@ -67,7 +67,5 @@ if __name__ == '__main__':
                 me_p2 += 1
 
 
-    print(elf_p1)
-    print(me_p1)
-    print(elf_p2)
-    print(me_p2)
+    print('Points part 1: ' + str(me_p1))
+    print('Points part 2: ' + str(me_p2))

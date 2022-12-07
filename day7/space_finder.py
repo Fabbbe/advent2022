@@ -43,7 +43,6 @@ if __name__ == '__main__':
         for j in range(len(dirs)):
             if dirs[i] in dirs[j]: # This is a real subdirectory
                 dir_sizes[i] += dir_direct_sizes[j]
-
     
     sum_p1 = 0
     for size in dir_sizes:
