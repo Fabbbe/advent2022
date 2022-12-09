@@ -71,7 +71,7 @@ char* read_input(const char* path, long *length) {
 
 	content = malloc(sizeof(char)*size+1);
 
-	fgets(content, size, fp);
+	fgets(content, size, fp); // This only gets one line atm
 	content[size] = 0x00;
 	fclose(fp);
 

@@ -13,25 +13,26 @@ def visible(trees, x, y):
         if trees[i][y] >= trees[x][y]:
             left_smaller = False
             break
+    if left_smaller: return True
 
     for i in range(x+1, width):
         if trees[i][y] >= trees[x][y]:
             right_smaller = False
             break
+    if left_smaller: return True
 
     for i in range(0, y):
         if trees[x][i] >= trees[x][y]:
             up_smaller = False
             break
+    if left_smaller: return True
 
     for i in range(y+1, height):
         if trees[x][i] >= trees[x][y]:
             down_smaller = False
             break
 
-    if left_smaller or right_smaller or up_smaller or down_smaller:
-        return True
-    return False
+    return left_smaller or right_smaller or up_smaller or down_smaller
 
 def score_tree(trees, x, y):
     height = len(trees)
