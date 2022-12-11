@@ -1,5 +1,4 @@
 import sys
-import numpy
 
 class Monkey:
     items: []
