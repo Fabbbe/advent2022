@@ -105,9 +105,8 @@ if __name__ == '__main__':
 
     # find all divisors without duplicates
     divisors_all = [m.test_divisor for m in monkeys]
-    divisors = []
-    [divisors.append(x) for x in divisors_all if x not in divisors]
-    divis = numpy.prod(divisors)
+    divis = 1
+    for x in divisors_all: divis*=x
 
     for i in range(10000):
         #print(i)
