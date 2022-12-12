@@ -9,6 +9,9 @@ def fix_value(value):
 def get_neighbors(node, data):
     neighbors = []
 
+    width = len(data)
+    height = len(data[0])
+
     if node[0]-1 >= 0:
         neighbors.append([node[0]-1, node[1]])
     if node[0]+1 < width:
@@ -23,50 +26,51 @@ def get_neighbors(node, data):
 def get_good_neighbors(node, data):
     neighbors = []
 
-    width = len(data[0])
-    height = len(data)
+    width = len(data)
+    height = len(data[0])
 
+    curr_data = data[node[0]][node[1]]
 
-    curr_data = fix_value(data[node[1]][node[0]])
-
-    if node[0]-1 >= 0 and not (ord(fix_value(data[node[1]][node[0]-1])) - ord(curr_data) >= 2):
+    if node[0]-1 >= 0 and not (data[node[0]-1][node[1]] - curr_data >= 2):
         neighbors.append([node[0]-1, node[1]])
-    if node[0]+1 < width and not (ord(fix_value(data[node[1]][node[0]+1])) - ord(curr_data) >= 2):
+    if node[0]+1 < width and not (data[node[0]+1][node[1]] - curr_data >= 2):
         neighbors.append([node[0]+1, node[1]])
-    if node[1]-1 >= 0 and not (ord(fix_value(data[node[1]-1][node[0]])) - ord(curr_data) >= 2):
+    if node[1]-1 >= 0 and not (data[node[0]][node[1]-1] - curr_data >= 2):
         neighbors.append([node[0], node[1]-1])
-    if node[1]+1 < height and not (ord(fix_value(data[node[1]+1][node[0]])) - ord(curr_data) >= 2):
+    if node[1]+1 < height and not (data[node[0]][node[1]+1] - curr_data >= 2):
         neighbors.append([node[0], node[1]+1])
 
     return neighbors
 
 if __name__ == '__main__':
-    elevation_data = [] 
+    elevation_data_string = [] 
     with open('./input', 'r') as f:
-        elevation_data = [x.strip() for x in f.readlines()]
+        elevation_data_string = [x.strip() for x in f.readlines()]
 
 
-    width = len(elevation_data[0])
-    height = len(elevation_data)
+    width = len(elevation_data_string[0])
+    height = len(elevation_data_string)
 
     start = [0,0]
     end = [0,0]
 
     visited_nodes = []
     tentative_distances = []
+    elevation_data = []
 
     # Process data
     for x in range(width):
         visited_temp = []
         distance_temp = []
+        elevation_temp = []
         for y in range(height):
 
-            if elevation_data[y][x] == 'S':
+            if elevation_data_string[y][x] == 'S':
                 start = [x, y]
                 visited_temp.append(1) # we have visited the start
                 distance_temp.append(0) # start has a distance of 0
 
-            elif elevation_data[y][x] == 'E':
+            elif elevation_data_string[y][x] == 'E':
                 end   = [x, y]
                 visited_temp.append(0) # all other nodes are unvisited
                 distance_temp.append(10**10) # something REALLY BIG
@@ -75,8 +79,11 @@ if __name__ == '__main__':
                 visited_temp.append(0) # all other nodes are unvisited
                 distance_temp.append(10**10) # something REALLY BIG
 
+            elevation_temp.append(ord(fix_value(elevation_data_string[y][x])) - ord('a'))
+
         visited_nodes.append(visited_temp)
         tentative_distances.append(distance_temp) # something REALLY BIG
+        elevation_data.append(elevation_temp)
                 
 
     # PART 1
@@ -90,18 +97,19 @@ if __name__ == '__main__':
         num_open_nodes = len(open_nodes)
         for i in range(num_open_nodes):
             curr = open_nodes[0]
-            curr_data = fix_value(elevation_data[curr[1]][curr[0]])
+            curr_data = elevation_data[curr[0]][curr[1]]
             
             shortest_neighboring_distance = 10**10
 
             neighbors = get_neighbors(curr, elevation_data)
 
             for neighbor in neighbors:
-                neighbor_data = fix_value(elevation_data[neighbor[1]][neighbor[0]])
+                #neighbor_data = fix_value(elevation_data[neighbor[1]][neighbor[0]])
+                neighbor_data = elevation_data[neighbor[0]][neighbor[1]]
                 if visited_nodes[neighbor[0]][neighbor[1]]: 
-                    if not ord(curr_data) - ord(neighbor_data)  >= 2:
+                    if not curr_data - neighbor_data  >= 2:
                         shortest_neighboring_distance = min(tentative_distances[neighbor[0]][neighbor[1]], shortest_neighboring_distance)
-                elif not ord(neighbor_data) - ord(curr_data) >= 2:
+                elif not neighbor_data - curr_data >= 2:
                     if not neighbor in open_nodes:
                         open_nodes.append(neighbor)
                     
@@ -129,7 +137,7 @@ if __name__ == '__main__':
     starting_nodes = []
     for x in range(width):
         for y in range(height):
-            if elevation_data[y][x] == 'a' or elevation_data[y][x] == 'S':
+            if elevation_data[x][y] == 0:
                 starting_nodes.append([x,y])
 
     best_start_path = 10**10
@@ -146,7 +154,7 @@ if __name__ == '__main__':
             distance_temp = []
             for y in range(height):
 
-                if elevation_data[y][x] == 'E':
+                if elevation_data_string[y][x] == 'E':
                     end   = [x, y]
                     visited_temp.append(0) # all other nodes are unvisited
 
@@ -176,18 +184,20 @@ if __name__ == '__main__':
             num_open_nodes = len(open_nodes)
             for i in range(num_open_nodes):
                 curr = open_nodes[0]
-                curr_data = fix_value(elevation_data[curr[1]][curr[0]])
+
+                #print(curr)
+                curr_data = elevation_data[curr[0]][curr[1]]
                 
                 shortest_neighboring_distance = 10**10
 
                 neighbors = get_neighbors(curr, elevation_data)
 
                 for neighbor in neighbors:
-                    neighbor_data = fix_value(elevation_data[neighbor[1]][neighbor[0]])
+                    neighbor_data = elevation_data[neighbor[0]][neighbor[1]]
                     if visited_nodes[neighbor[0]][neighbor[1]]: # CHECK FOR ELEVATION diff
-                        if not ord(curr_data) - ord(neighbor_data)  >= 2:
+                        if not curr_data - neighbor_data  >= 2:
                             shortest_neighboring_distance = min(tentative_distances[neighbor[0]][neighbor[1]], shortest_neighboring_distance)
-                    elif not ord(neighbor_data) - ord(curr_data) >= 2:
+                    elif not neighbor_data - curr_data >= 2:
                         if not neighbor in open_nodes:
                             open_nodes.append(neighbor)
                         
