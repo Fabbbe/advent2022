@@ -1,5 +1,12 @@
 from functools import cmp_to_key
+from ast import literal_eval
 
+''' 
+The main function that implements the actual comparisons. 
+The base case if both input variables are integers, then we compare.
+If not then both should be lists, and if so we loop through them.
+And lastly if both aren't lists, make them both lists
+'''
 def less_than(left, right):
     # First different value in left should be larger than right
     if isinstance(left, int) and isinstance(right, int):
@@ -25,18 +32,18 @@ def less_than(left, right):
     elif isinstance(right, list):
         return less_than([left], right)
 
-    exit() # fail
+    exit() # fail, should never get here
 
 def compare_strings(left, right):
     if left == right:
         return 0
-    elif less_than(eval(left), eval(right)):
+    elif less_than(literal_eval(left), literal_eval(right)):
         return -1
     return 1
 
 def signal_order_check(signal):
-    left = eval(signal[0])
-    right = eval(signal[1])
+    left = literal_eval(signal[0])
+    right = literal_eval(signal[1])
     return less_than(left, right)
 
 if __name__ == '__main__':
