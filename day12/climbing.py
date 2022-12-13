@@ -185,7 +185,6 @@ if __name__ == '__main__':
             for i in range(num_open_nodes):
                 curr = open_nodes[0]
 
-                #print(curr)
                 curr_data = elevation_data[curr[0]][curr[1]]
                 
                 shortest_neighboring_distance = 10**10
@@ -203,7 +202,7 @@ if __name__ == '__main__':
                         
                 
                 tentative_distances[curr[0]][curr[1]] = shortest_neighboring_distance + 1
-
+                
                 visited_nodes[curr[0]][curr[1]] = 1
 
                 # ADD NEW OPEN NODES
